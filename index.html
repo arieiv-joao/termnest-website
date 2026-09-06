@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Termnest — Everything lands in the nest.</title>
+<meta name="description" content="Termnest turns your school's emails into one organized, per-child feed of events, tasks and fee reminders — the only app built for UAE families that connects to your inbox, free.">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Termnest">
+<meta property="og:title" content="Termnest — Everything lands in the nest.">
+<meta property="og:description" content="School emails, sorted per child, before it's too late. Built for UAE families. Free.">
+<meta property="og:url" content="https://termnest.app/">
+<meta property="og:locale" content="en_AE">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Termnest — Everything lands in the nest.">
+<meta name="twitter:description" content="School emails, sorted per child, before it's too late. Built for UAE families. Free.">
+
+<!-- Favicon: the nest glyph (two curved strokes) on deep harbour -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='%23143D38'/%3E%3Cpath%20d='M10%2024%20C10%2013,%2014.5%208,%2014.5%208'%20stroke='%237FB8AE'%20stroke-width='3.4'%20stroke-linecap='round'%20fill='none'/%3E%3Cpath%20d='M22%2024%20C22%2013,%2017.5%208,%2017.5%208'%20stroke='%23E0A94E'%20stroke-width='3.4'%20stroke-linecap='round'%20fill='none'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Instrument+Sans:wght@400;500;600&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  /* ============================================================
+     HARBOUR v1 · LIGHT — tokens verbatim from design/screens-spec.html
+     ============================================================ */
+  :root{
+    --t-bg:#F4F7F2;             /* ground — Morning Mist          */
+    --t-surface:#FFFFFF;        /* cards, sheets                  */
+    --t-surface-sunken:#ECF1EB;
+    --t-ink:#143D38;            /* primary text — Deep Harbour    */
+    --t-ink-soft:#5B6E68;
+    --t-ink-faint:#6B7D76;
+    --t-border:#DDE5DE;
+    --t-border-strong:#C6D2CB;
+    --t-accent:#1F7A6F;         /* Lagoon                         */
+    --t-accent-pressed:#17635A;
+    --t-on-accent:#FFFFFF;
+    --t-attention:#C9861E;      /* Lantern Honey                  */
+    --t-attention-ink:#8A5B12;
+    --t-attention-bg:#F6ECDB;
+    --t-danger:#BF5B3C;         /* Coral Flag                     */
+    --t-danger-bg:#FBEFE9;
+    --t-danger-border:#E8C8B8;
+    --t-kind-bg:#E7EEE8;
+    --t-kind-ink:#3C544D;
+    --t-quote-bg:#F6F8F5;
+    --t-holiday-band:#E9E4D3;
+    --t-holiday-ink:#6A6248;
+
+    /* child identity wheel — light values */
+    --ch-cove:#38629E;     --ch-cove-bg:#EBF0F8;
+    --ch-apricot:#C96F2C;  --ch-apricot-bg:#FAF0E4;
+
+    --display:"Bricolage Grotesque","Avenir Next",Avenir,system-ui,-apple-system,sans-serif;
+    --body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+    --mono:"Spline Sans Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  /* Deep-harbour dark band — the Harbour dark tokens, scoped */
+  .band-dark{
+    --t-bg:#0E201D; --t-surface:#16302C; --t-surface-sunken:#0B1917;
+    --t-ink:#E4EEE9; --t-ink-soft:#9DB4AC; --t-ink-faint:#7E948C;
+    --t-border:#24443D; --t-border-strong:#2E524A;
+    --t-accent:#55A99C; --t-accent-pressed:#6FBDB0; --t-on-accent:#0C1E1B;
+    --t-attention:#E0A94E; --t-attention-ink:#E9BC6C; --t-attention-bg:#2E2410;
+    --t-danger:#E08663; --t-danger-bg:#38221A; --t-danger-border:#553427;
+    --t-kind-bg:#1F3B35; --t-kind-ink:#A9C0B8; --t-quote-bg:#122A26;
+    background:var(--t-bg); color:var(--t-ink);
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth; color-scheme:light}
+  body{
+    margin:0; background:var(--t-bg); color:var(--t-ink);
+    font-family:var(--body); font-size:16.5px; line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--t-accent)}
+  a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--t-accent); outline-offset:2px}
+  .wrap{max-width:1120px; margin-inline:auto; padding-inline:24px}
+
+  .overline{
+    font-family:var(--mono); font-size:12px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--t-ink-soft); margin:0 0 14px;
+  }
+
+  /* ---------- header ---------- */
+  header.site{border-block-end:1px solid var(--t-border); background:var(--t-bg)}
+  .site-bar{display:flex; align-items:center; gap:22px; padding-block:16px}
+  .wordmark{display:inline-flex; align-items:center; gap:9px; text-decoration:none; color:var(--t-ink);
+    font-family:var(--display); font-weight:700; font-size:21px; letter-spacing:-.01em}
+  .wordmark svg{display:block}
+  nav.site-nav{margin-inline-start:auto; display:flex; align-items:center; gap:20px;
+    font-family:var(--mono); font-size:12.5px}
+  nav.site-nav a{text-decoration:none; color:var(--t-ink-soft)}
+  nav.site-nav a:hover{color:var(--t-ink)}
+  nav.site-nav a.cta{
+    background:var(--t-ink); color:var(--t-bg); padding:8px 15px; border-radius:10px;
+    font-family:var(--body); font-weight:600; font-size:14px;
+  }
+  nav.site-nav a.cta:hover{background:var(--t-accent-pressed); color:var(--t-on-accent)}
+  @media (max-width:640px){ nav.site-nav a.quiet{display:none} }
+
+  /* ---------- hero ---------- */
+  .hero{display:grid; grid-template-columns:minmax(320px,1fr) minmax(300px,430px);
+    gap:48px; align-items:center; padding-block:64px 84px}
+  @media (max-width:900px){ .hero{grid-template-columns:1fr; padding-block:44px 56px} }
+  .hero h1{
+    font-family:var(--display); font-weight:700; letter-spacing:-.02em;
+    font-size:clamp(40px,6.2vw,68px); line-height:1.02; margin:0 0 20px;
+  }
+  .hero h1 .nest{color:var(--t-accent)}
+  .hero .sub{font-size:18.5px; color:var(--t-ink-soft); max-width:54ch; margin:0 0 26px; line-height:1.55}
+  .hero .sub b{color:var(--t-ink); font-weight:600}
+  .hero-ctas{display:flex; gap:12px; flex-wrap:wrap; align-items:center}
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    font-family:var(--body); font-weight:600; font-size:16px; text-decoration:none;
+    padding:14px 24px; border-radius:14px; border:1.5px solid transparent; cursor:pointer;
+  }
+  .btn.primary{background:var(--t-accent); color:var(--t-on-accent)}
+  .btn.primary:hover{background:var(--t-accent-pressed)}
+  .btn.ghost{background:var(--t-surface); color:var(--t-ink); border-color:var(--t-border-strong)}
+  .btn.ghost:hover{border-color:var(--t-ink)}
+  .hero-trust{display:flex; gap:8px; align-items:flex-start; margin-block-start:18px;
+    font-size:13.5px; color:var(--t-ink-soft); max-width:46ch; line-height:1.5}
+  .hero-trust svg{flex:none; margin-block-start:2px}
+
+  /* ---------- phone mock (components per screens-spec §02) ---------- */
+  .stage{position:relative; justify-self:center; padding-block-start:26px}
+  .phone{
+    width:390px; max-width:100%; background:#143D38; border-radius:44px; padding:10px;
+    box-shadow:0 24px 48px -24px rgba(20,61,56,.45);
+  }
+  .screen{
+    background:var(--t-bg); border-radius:36px; overflow:hidden; display:flex; flex-direction:column;
+    min-height:640px; font-family:var(--body); color:var(--t-ink); font-size:16px;
+  }
+  .statusbar{display:flex; justify-content:space-between; align-items:center; padding:14px 26px 6px; font-size:13px; font-weight:600}
+  .app-head{padding:8px 20px 12px}
+  .app-head .today-date{font-family:var(--mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--t-ink-soft); margin:0 0 2px}
+  .app-head h4{font-family:var(--display); font-weight:700; font-size:24px; margin:0; letter-spacing:-.01em}
+  .filter-row{display:flex; gap:8px; padding:10px 20px 4px; flex-wrap:wrap}
+  .fchip{font-size:13px; font-weight:600; padding:6px 14px; border-radius:999px; border:1.5px solid var(--t-ink); color:var(--t-ink); background:transparent}
+  .fchip.active{background:var(--t-ink); color:var(--t-bg)}
+  .fchip.ch{border-color:var(--ch); color:var(--ch)}
+  .feed{padding:12px 16px 16px; display:flex; flex-direction:column; gap:12px; flex:1}
+  .day-label{font-family:var(--mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--t-ink-soft); margin:6px 4px 0}
+  .card-item{background:var(--t-surface); border:1px solid var(--t-border); border-radius:16px; padding:14px 14px 12px; position:relative; overflow:hidden}
+  .card-item.spine{border-inline-start:4px solid var(--ch,var(--t-accent))}
+  .card-item.spine-all{border-inline-start:4px solid var(--t-accent)}
+  .item-top{display:flex; align-items:center; gap:8px; margin-block-end:6px; flex-wrap:wrap}
+  .kind{font-family:var(--mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; padding:3px 8px; border-radius:6px; background:var(--t-kind-bg); color:var(--t-kind-ink)}
+  .kind.pay{background:var(--t-attention-bg); color:var(--t-attention-ink)}
+  .nametag{display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:600; padding:3px 9px 3px 4px; border-radius:7px; background:var(--ch-bg); color:var(--ch); border:1px dashed color-mix(in srgb, var(--ch) 55%, transparent)}
+  .nametag .dot{width:16px; height:16px; border-radius:5px; display:inline-flex; align-items:center; justify-content:center; color:var(--t-surface); font-size:9.5px; font-weight:700; font-family:var(--display); background:var(--ch)}
+  .item-title{font-size:16px; font-weight:600; line-height:1.3; margin:0}
+  .item-when{font-size:13px; color:var(--t-ink-soft); margin:3px 0 0; font-weight:500}
+  .item-when b{color:var(--t-ink)}
+  .amount{font-family:var(--mono); font-size:15px; font-weight:500; color:var(--t-ink)}
+  .bring-row{display:flex; gap:6px; flex-wrap:wrap; margin-block-start:8px}
+  .bring{font-size:12px; font-weight:500; background:var(--ch-bg,var(--t-kind-bg)); color:var(--ch,var(--t-kind-ink)); padding:4px 10px; border-radius:999px}
+  .remind-note{display:flex; align-items:center; gap:6px; margin-block-start:9px; font-size:12px; color:var(--t-ink-soft)}
+  .src{display:flex; align-items:center; justify-content:space-between; gap:8px; margin-block-start:10px; padding-block-start:8px; border-block-start:1px dashed var(--t-border); font-family:var(--mono); font-size:10.5px; color:var(--t-ink-faint)}
+  .src .from{display:flex; align-items:center; gap:6px; min-width:0}
+  .src .from span{overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+  .src .view{color:var(--t-accent); font-weight:500; flex:none}
+  .tray-banner{display:flex; align-items:center; gap:10px; background:var(--t-danger-bg); border:1px solid var(--t-danger-border); border-radius:14px; padding:11px 14px; font-size:13.5px; font-weight:600; color:var(--t-danger)}
+  .tray-banner .count{flex:none; width:22px; height:22px; border-radius:50%; background:var(--t-danger); color:var(--t-surface); display:flex; align-items:center; justify-content:center; font-size:12px}
+  .tray-banner .go{margin-inline-start:auto; font-size:16px}
+  .home-pill{width:120px; height:5px; border-radius:3px; background:var(--t-ink); opacity:.25; margin:8px auto 6px}
+
+  /* the reminder notification, breaking the frame — the whole point of the product */
+  .notif{
+    position:absolute; inset-block-start:0; inset-inline-end:-26px; z-index:2;
+    background:var(--t-surface); border:1px solid var(--t-border); border-radius:18px;
+    padding:12px 14px; display:flex; gap:11px; width:330px; max-width:92vw;
+    box-shadow:0 10px 28px -18px rgba(20,61,56,.35);
+  }
+  @media (max-width:900px){ .notif{inset-inline-end:0} }
+  .notif .app-icon{flex:none; width:38px; height:38px; border-radius:9px; background:#143D38; display:flex; align-items:center; justify-content:center}
+  .notif .n-body{min-width:0; flex:1}
+  .notif .n-meta{display:flex; justify-content:space-between; gap:8px; font-size:11px; color:var(--t-ink-faint); margin-block-end:1px}
+  .notif .n-meta b{font-weight:600; letter-spacing:.04em; color:var(--t-ink-soft)}
+  .notif .n-title{font-size:14px; font-weight:600; margin:0; line-height:1.35}
+  .notif .n-text{font-size:13.5px; color:var(--t-ink-soft); margin:1px 0 0; line-height:1.4}
+  @media (prefers-reduced-motion:no-preference){
+    .notif{animation:landing .7s cubic-bezier(.2,.9,.3,1) .5s both}
+    @keyframes landing{from{opacity:0; transform:translateY(-14px)} to{opacity:1; transform:none}}
+  }
+
+  /* ---------- positioning strip ---------- */
+  .strip{border-block:1px solid var(--t-border); background:var(--t-surface)}
+  .strip p{
+    font-family:var(--display); font-weight:600; letter-spacing:-.01em;
+    font-size:clamp(19px,2.6vw,25px); line-height:1.35; text-align:center;
+    max-width:34ch; margin-inline:auto; padding-block:38px;
+  }
+  .strip .honey{color:var(--t-attention-ink)}
+
+  /* ---------- sections ---------- */
+  section{padding-block:76px}
+  h2.sec{
+    font-family:var(--display); font-weight:700; letter-spacing:-.015em;
+    font-size:clamp(28px,4vw,40px); line-height:1.1; margin:0 0 14px;
+  }
+  .sec-intro{color:var(--t-ink-soft); font-size:17.5px; max-width:62ch; margin:0 0 40px}
+  .sec-intro b{color:var(--t-ink); font-weight:600}
+
+  /* how it works */
+  .steps{display:grid; grid-template-columns:repeat(3,1fr); gap:20px}
+  @media (max-width:860px){ .steps{grid-template-columns:1fr} }
+  .step{background:var(--t-surface); border:1px solid var(--t-border); border-radius:20px; padding:24px 22px; display:flex; flex-direction:column}
+  .step .no{font-family:var(--mono); font-size:11px; letter-spacing:.14em; color:var(--t-accent); margin:0 0 12px}
+  .step h3{font-family:var(--display); font-weight:600; font-size:21px; margin:0 0 8px; letter-spacing:-.01em}
+  .step p{font-size:15px; color:var(--t-ink-soft); margin:0 0 20px; line-height:1.55}
+  .step p b{color:var(--t-ink); font-weight:600}
+  .step-demo{margin-block-start:auto; background:var(--t-bg); border:1px solid var(--t-border); border-radius:14px; padding:14px; display:flex; flex-direction:column; gap:8px}
+  .big-btn{display:flex; align-items:center; justify-content:center; gap:9px; font-size:14px; font-weight:600; padding:12px; border-radius:12px; background:var(--t-ink); color:var(--t-bg)}
+  .big-btn.line{background:var(--t-surface); color:var(--t-ink); border:1.5px solid var(--t-border-strong)}
+  .sender-row{display:flex; align-items:center; gap:10px; background:var(--t-surface); border:1px solid var(--t-border); border-radius:14px; padding:10px 12px}
+  .sender-row .env{flex:none; width:32px; height:32px; border-radius:10px; background:var(--t-kind-bg); display:flex; align-items:center; justify-content:center}
+  .sender-row .who{min-width:0; flex:1}
+  .sender-row .who b{display:block; font-size:13px; font-weight:600; line-height:1.3}
+  .sender-row .who code{font-family:var(--mono); font-size:10px; color:var(--t-ink-faint); display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+  .toggle{flex:none; width:42px; height:26px; border-radius:13px; background:var(--t-accent); position:relative}
+  .toggle::after{content:""; position:absolute; inset-block-start:3px; inset-inline-end:3px; width:20px; height:20px; border-radius:50%; background:#fff}
+  .toggle.off{background:var(--t-border-strong)}
+  .toggle.off::after{inset-inline-end:auto; inset-inline-start:3px}
+  .mini-note{font-family:var(--mono); font-size:10.5px; color:var(--t-ink-faint); text-align:center; letter-spacing:.04em}
+
+  /* trust band */
+  .band-dark .overline{color:var(--t-ink-soft)}
+  .band-dark h2.sec{color:var(--t-ink)}
+  .trust-lead{font-size:18px; color:var(--t-ink-soft); max-width:64ch; margin:0 0 12px; line-height:1.6}
+  .trust-lead b{color:var(--t-ink); font-weight:600}
+  .commit-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:14px; margin-block-start:36px}
+  .commit{background:var(--t-surface); border:1px solid var(--t-border); border-radius:16px; padding:18px 18px 16px}
+  .commit .c-no{font-family:var(--mono); font-size:10.5px; letter-spacing:.12em; color:var(--t-attention); margin:0 0 8px}
+  .commit h3{font-family:var(--display); font-weight:600; font-size:16.5px; margin:0 0 6px; letter-spacing:-.005em; line-height:1.3}
+  .commit p{font-size:13.5px; color:var(--t-ink-soft); margin:0; line-height:1.5}
+  .trust-cta{margin-block-start:32px; display:flex; gap:14px; align-items:center; flex-wrap:wrap}
+  .band-dark .btn.ghost{background:transparent; color:var(--t-ink); border-color:var(--t-border-strong)}
+  .band-dark .btn.ghost:hover{border-color:var(--t-ink)}
+  .band-dark a{color:var(--t-accent)}
+
+  /* free & why */
+  .free{display:grid; grid-template-columns:minmax(280px,5fr) minmax(280px,7fr); gap:40px; align-items:start}
+  @media (max-width:860px){ .free{grid-template-columns:1fr} }
+  .free .answer{font-size:16.5px; color:var(--t-ink-soft); line-height:1.65; margin:0 0 14px}
+  .free .answer b{color:var(--t-ink); font-weight:600}
+
+  /* waitlist */
+  .waitlist{background:var(--t-surface); border-block-start:1px solid var(--t-border)}
+  .wl-inner{max-width:560px; margin-inline:auto; text-align:center}
+  .wl-inner h2.sec{margin-block-end:10px}
+  .wl-inner .sec-intro{margin-block-end:28px}
+  .wl-form{display:flex; gap:10px; flex-wrap:wrap; justify-content:center}
+  .wl-form input[type=email]{
+    flex:1 1 260px; font-family:var(--body); font-size:16px; color:var(--t-ink);
+    background:var(--t-bg); border:1.5px solid var(--t-border-strong); border-radius:14px;
+    padding:14px 16px;
+  }
+  .wl-form input[type=email]::placeholder{color:var(--t-ink-faint)}
+  .wl-form input[type=email]:focus{border-color:var(--t-accent); outline:none}
+  .wl-note{font-size:13px; color:var(--t-ink-faint); margin-block-start:14px}
+  .wl-note a{color:var(--t-accent)}
+  .wl-ok{margin-block-start:16px; font-size:14.5px; font-weight:600; color:var(--t-accent)}
+
+  /* footer */
+  footer.site{border-block-start:1px solid var(--t-border); padding-block:34px 46px}
+  .foot-row{display:flex; gap:10px 26px; align-items:center; flex-wrap:wrap;
+    font-family:var(--mono); font-size:12px; color:var(--t-ink-soft)}
+  .foot-row a{color:var(--t-ink-soft); text-decoration:none}
+  .foot-row a:hover{color:var(--t-ink)}
+  .foot-row .made{margin-inline-start:auto}
+  @media (max-width:640px){ .foot-row .made{margin-inline-start:0} }
+
+  @media (prefers-reduced-motion:reduce){ *{animation:none!important; transition:none!important} html{scroll-behavior:auto} }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap site-bar">
+    <a class="wordmark" href="/" aria-label="Termnest home">
+      <svg width="24" height="18" viewBox="0 0 22 16" fill="none" aria-hidden="true">
+        <path d="M4 15 C4 6, 8 2, 8 2" stroke="#1F7A6F" stroke-width="3" stroke-linecap="round"/>
+        <path d="M18 15 C18 6, 14 2, 14 2" stroke="#C9861E" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+      Termnest
+    </a>
+    <nav class="site-nav" aria-label="Site">
+      <a class="quiet" href="#how">How it works</a>
+      <a class="quiet" href="#trust">Trust</a>
+      <a class="quiet" href="privacy.html">Privacy</a>
+      <a class="cta" href="#waitlist">Join the waitlist</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- ================= HERO ================= -->
+  <div class="wrap hero">
+    <div>
+      <p class="overline">For everyone who found out about crazy hair day at 7:42 that morning</p>
+      <h1>Everything lands in <span class="nest">the&nbsp;nest.</span></h1>
+      <p class="sub">Termnest turns your school's emails into one organized, <b>per-child</b> feed of events, tasks and fee reminders — the only app built for UAE families that <b>connects to your inbox</b>, free.</p>
+      <div class="hero-ctas">
+        <a class="btn primary" href="#waitlist">Join the waitlist</a>
+        <a class="btn ghost" href="#how">How it works</a>
+      </div>
+      <p class="hero-trust">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true"><path d="M7.5 1.2 12.8 3v4c0 3.2-2.2 5.6-5.3 6.8C4.4 12.6 2.2 10.2 2.2 7V3l5.3-1.8Z" stroke="#1F7A6F" stroke-width="1.4" stroke-linejoin="round"/><path d="m5.2 7.4 1.6 1.6 3-3.2" stroke="#1F7A6F" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        It reads only the school senders you approve — nothing else in your inbox is ever opened. <a href="#trust">The straight answer</a>
+      </p>
+    </div>
+
+    <!-- CSS mock of the Today screen, per design/screens-spec.html — no screenshots exist yet -->
+    <div class="stage" aria-label="Preview of the Termnest app: a reminder notification and the Today feed">
+      <div class="notif" role="img" aria-label="Notification from Termnest, yesterday 19:00: Crazy hair day tomorrow, hairspray and bands tonight">
+        <div class="app-icon" aria-hidden="true">
+          <svg width="20" height="15" viewBox="0 0 22 16" fill="none"><path d="M4 15 C4 6, 8 2, 8 2" stroke="#7FB8AE" stroke-width="3" stroke-linecap="round"/><path d="M18 15 C18 6, 14 2, 14 2" stroke="#E0A94E" stroke-width="3" stroke-linecap="round"/></svg>
+        </div>
+        <div class="n-body">
+          <div class="n-meta"><b>TERMNEST</b><span>yesterday 19:00</span></div>
+          <p class="n-title">Crazy hair day tomorrow — Rui</p>
+          <p class="n-text">Hairspray and bands tonight. The email arrived 11 days ago; you're covered.</p>
+        </div>
+      </div>
+
+      <div class="phone">
+        <div class="screen" aria-hidden="true">
+          <div class="statusbar"><span>7:42</span><svg width="40" height="12" viewBox="0 0 40 12" fill="none"><rect x="0" y="4" width="3" height="8" rx="1" fill="currentColor"/><rect x="5" y="2" width="3" height="10" rx="1" fill="currentColor"/><rect x="10" y="0" width="3" height="12" rx="1" fill="currentColor" opacity=".35"/><rect x="20" y="1" width="18" height="10" rx="3" stroke="currentColor" stroke-width="1.2"/><rect x="22" y="3" width="11" height="6" rx="1.5" fill="currentColor"/></svg></div>
+          <div class="app-head">
+            <p class="today-date">Sun 6 Sep</p>
+            <h4>Today</h4>
+          </div>
+          <div class="filter-row">
+            <span class="fchip active">All</span>
+            <span class="fchip ch" style="--ch:var(--ch-cove)">Rui</span>
+            <span class="fchip ch" style="--ch:var(--ch-apricot)">Adi</span>
+          </div>
+          <div class="feed">
+            <p class="day-label">Today</p>
+            <div class="card-item spine" style="--ch:var(--ch-cove);--ch-bg:var(--ch-cove-bg)">
+              <div class="item-top"><span class="kind">Bring</span><span class="nametag"><span class="dot">R</span>Rui</span></div>
+              <p class="item-title">Crazy hair day</p>
+              <p class="item-when">Today · parade at 8:00</p>
+              <div class="bring-row"><span class="bring">hairspray</span><span class="bring">bands</span><span class="bring">courage</span></div>
+              <div class="remind-note"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M6 1a4 4 0 0 1 4 4v2.5l1 1.5H1l1-1.5V5a4 4 0 0 1 4-4Z" stroke="currentColor" stroke-width="1.1"/><path d="M5 10.5a1 1 0 0 0 2 0" stroke="currentColor" stroke-width="1.1"/></svg>Reminded last night, 19:00</div>
+              <div class="src"><span class="from"><svg width="11" height="9" viewBox="0 0 11 9" fill="none" aria-hidden="true"><rect x=".5" y=".5" width="10" height="8" rx="1.5" stroke="currentColor"/><path d="m1 1.5 4.5 3.5L10 1.5" stroke="currentColor"/></svg><span>from pa@yourschool.ae</span></span><span class="view">view ›</span></div>
+            </div>
+            <p class="day-label">Coming up</p>
+            <div class="card-item spine" style="--ch:var(--ch-apricot);--ch-bg:var(--ch-apricot-bg)">
+              <div class="item-top"><span class="kind pay">Payment</span><span class="nametag"><span class="dot">A</span>Adi</span></div>
+              <p class="item-title">Bus fees · Term 1</p>
+              <p class="item-when"><b>Due Thursday</b> · <span class="amount">AED 1,200</span></p>
+              <div class="src"><span class="from"><svg width="11" height="9" viewBox="0 0 11 9" fill="none" aria-hidden="true"><rect x=".5" y=".5" width="10" height="8" rx="1.5" stroke="currentColor"/><path d="m1 1.5 4.5 3.5L10 1.5" stroke="currentColor"/></svg><span>from accounts@yourschool.ae</span></span><span class="view">view ›</span></div>
+            </div>
+            <div class="card-item spine-all">
+              <div class="item-top"><span class="kind">Event</span><span class="nametag" style="--ch:var(--ch-cove);--ch-bg:var(--ch-cove-bg)"><span class="dot">R</span>Rui</span><span class="nametag" style="--ch:var(--ch-apricot);--ch-bg:var(--ch-apricot-bg)"><span class="dot">A</span>Adi</span></div>
+              <p class="item-title">International Day</p>
+              <p class="item-when"><b>Thu 24 Sep</b> · whole school</p>
+              <div class="src"><span class="from"><svg width="11" height="9" viewBox="0 0 11 9" fill="none" aria-hidden="true"><rect x=".5" y=".5" width="10" height="8" rx="1.5" stroke="currentColor"/><path d="m1 1.5 4.5 3.5L10 1.5" stroke="currentColor"/></svg><span>from pa@yourschool.ae</span></span><span class="view">view ›</span></div>
+            </div>
+          </div>
+          <div class="home-pill"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= POSITIONING STRIP ================= -->
+  <div class="strip">
+    <div class="wrap">
+      <p>School emails, sorted per child, <span class="honey">before it's too late.</span> Built for UAE families. Free.</p>
+    </div>
+  </div>
+
+  <!-- ================= HOW IT WORKS ================= -->
+  <section id="how">
+    <div class="wrap">
+      <p class="overline">How it works</p>
+      <h2 class="sec">It does the work. You don't.</h2>
+      <p class="sec-intro">Other apps give you homework: forward every email, screenshot every flyer. Termnest connects once and catches school emails by itself — <b>including during the week you're too slammed to forward anything</b>, which is exactly the week you need it.</p>
+      <div class="steps">
+        <div class="step">
+          <p class="no">STEP 1</p>
+          <h3>Connect your inbox</h3>
+          <p>Gmail or Outlook, one time. You sign in on Google's or Microsoft's own pages — Termnest never sees your password, and its access is <b>read-only</b>.</p>
+          <div class="step-demo" aria-hidden="true">
+            <span class="big-btn"><svg width="15" height="15" viewBox="0 0 15 15" fill="none"><circle cx="7.5" cy="7.5" r="6.2" stroke="currentColor" stroke-width="1.5"/><path d="M7.5 4.2v3.3l2.3 1.6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>Continue with Google</span>
+            <span class="big-btn line">Continue with Microsoft</span>
+            <span class="mini-note">read-only · sign-in stays on their pages</span>
+          </div>
+        </div>
+        <div class="step">
+          <p class="no">STEP 2</p>
+          <h3>Approve your school's senders</h3>
+          <p>Termnest suggests the school addresses it found; you confirm the list. <b>Only those senders are ever read.</b> Everything else in your inbox stays unopened.</p>
+          <div class="step-demo" aria-hidden="true">
+            <div class="sender-row">
+              <span class="env"><svg width="14" height="11" viewBox="0 0 11 9" fill="none"><rect x=".5" y=".5" width="10" height="8" rx="1.5" stroke="#3C544D"/><path d="m1 1.5 4.5 3.5L10 1.5" stroke="#3C544D"/></svg></span>
+              <span class="who"><b>Primary office</b><code>pa@yourschool.ae</code></span>
+              <span class="toggle"></span>
+            </div>
+            <div class="sender-row">
+              <span class="env"><svg width="14" height="11" viewBox="0 0 11 9" fill="none"><rect x=".5" y=".5" width="10" height="8" rx="1.5" stroke="#3C544D"/><path d="m1 1.5 4.5 3.5L10 1.5" stroke="#3C544D"/></svg></span>
+              <span class="who"><b>School accounts</b><code>accounts@yourschool.ae</code></span>
+              <span class="toggle"></span>
+            </div>
+            <div class="sender-row">
+              <span class="env"><svg width="14" height="11" viewBox="0 0 11 9" fill="none"><rect x=".5" y=".5" width="10" height="8" rx="1.5" stroke="#3C544D"/><path d="m1 1.5 4.5 3.5L10 1.5" stroke="#3C544D"/></svg></span>
+              <span class="who"><b>Everything else</b><code>never opened</code></span>
+              <span class="toggle off"></span>
+            </div>
+          </div>
+        </div>
+        <div class="step">
+          <p class="no">STEP 3</p>
+          <h3>Every child gets their own feed</h3>
+          <p>Trips, forms, fees in AED — each lands under the right child, with reminders that fire <b>before the deadline</b>, on school-day-aware defaults. When Termnest isn't sure, it never guesses: uncertain items wait in a "needs a look" tray.</p>
+          <div class="step-demo" aria-hidden="true">
+            <div style="display:flex; gap:8px; flex-wrap:wrap">
+              <span class="nametag" style="--ch:var(--ch-cove);--ch-bg:var(--ch-cove-bg)"><span class="dot">R</span>Rui</span>
+              <span class="nametag" style="--ch:var(--ch-apricot);--ch-bg:var(--ch-apricot-bg)"><span class="dot">A</span>Adi</span>
+            </div>
+            <div class="card-item spine" style="--ch:var(--ch-cove);--ch-bg:var(--ch-cove-bg)">
+              <div class="item-top"><span class="kind pay">Payment</span><span class="nametag"><span class="dot">R</span>Rui</span></div>
+              <p class="item-title">Year 2 trip · permission slip</p>
+              <p class="item-when"><b>Friday</b> · <span class="amount">AED 60</span></p>
+            </div>
+            <div class="tray-banner"><span class="count">1</span> 1 item needs a look <span class="go">›</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TRUST ================= -->
+  <section id="trust" class="band-dark">
+    <div class="wrap">
+      <p class="overline">The trust section</p>
+      <h2 class="sec">"An app reading my email?!"</h2>
+      <p class="trust-lead">Completely fair — that was our first reaction too, and it's why Termnest is built the way it is. <b>The nest has one door, and you hold the list:</b> nothing enters it but the school senders you approve. Everything else in your inbox stays unopened — for the rest, Termnest can see that mail arrived, never what's in it.</p>
+      <p class="trust-lead">These eight commitments are architecture, not fine print. If we ever broke them, you'd delete the app — and you'd be right to.</p>
+
+      <div class="commit-grid">
+        <div class="commit">
+          <p class="c-no">01</p>
+          <h3>Only the senders you approve</h3>
+          <p>Full emails are fetched only from your approved school senders. Bank statements, work threads, group-buy drama: never opened. Access is read-only.</p>
+        </div>
+        <div class="commit">
+          <p class="c-no">02</p>
+          <h3>Email content deleted after 30 days</h3>
+          <p>Long enough to check any item against its source, then gone. Termnest keeps the calendar item, not your mailbox.</p>
+        </div>
+        <div class="commit">
+          <p class="c-no">03</p>
+          <h3>Every date shows its source</h3>
+          <p>Tap any event, task or fee and see the exact email it came from. No black box — if we got it wrong, you can see why and fix it.</p>
+        </div>
+        <div class="commit">
+          <p class="c-no">04</p>
+          <h3>Ads can never use your email</h3>
+          <p>Structurally never. When local partner offers arrive, the ads system has no technical path to mail data — and Google's rules forbid it besides.</p>
+        </div>
+        <div class="commit">
+          <p class="c-no">05</p>
+          <h3>Your children are never users</h3>
+          <p>No child accounts, no child logins, nothing for a school or advertiser to reach. You create and control the profiles.</p>
+        </div>
+        <div class="commit">
+          <p class="c-no">06</p>
+          <h3>Delete everything, self-service</h3>
+          <p>A button, not a support ticket. Access revoked at Google's or Microsoft's side, all content erased, backups purged.</p>
+        </div>
+        <div class="commit">
+          <p class="c-no">07</p>
+          <h3>No ad or analytics SDKs</h3>
+          <p>No trackers from ad networks, no analytics companies watching you use the app. Our measurement runs on our own infrastructure.</p>
+        </div>
+        <div class="commit">
+          <p class="c-no">08</p>
+          <h3>Every access is logged — ours too</h3>
+          <p>Including access by the people who build Termnest. We'd rather tell you this plainly than pretend a small company has a big company's org chart.</p>
+        </div>
+      </div>
+
+      <div class="trust-cta">
+        <a class="btn ghost" href="privacy.html">Read the full privacy page</a>
+        <span style="font-size:13.5px; color:var(--t-ink-soft)">Written to be read by a parent, not skimmed by a lawyer.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FREE & WHY ================= -->
+  <section id="free">
+    <div class="wrap free">
+      <div>
+        <p class="overline">The money question</p>
+        <h2 class="sec">Really free.<br>Here's the catch, out loud.</h2>
+      </div>
+      <div>
+        <p class="answer">"Free with no explanation" should make you suspicious, so here's the business model: once Termnest is genuinely useful, local family businesses — play areas, kids' retail, camps, tutoring — can pay to show offers timed to the school calendar. The week before winter break is useful to everyone involved.</p>
+        <p class="answer">Those offers can be targeted only by <b>emirate, your child's age band, the school-calendar window, and interests you explicitly declare</b>. Never — structurally never — by anything in your email. Later there may be a premium tier with extra perks.</p>
+        <p class="answer"><b>The core loop — school emails in, organized per-child reminders out — stays free.</b> If we ever break that, screenshot this.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= WAITLIST ================= -->
+  <section id="waitlist" class="waitlist">
+    <div class="wrap wl-inner">
+      <p class="overline">Launching UAE-first</p>
+      <h2 class="sec">Join the waitlist</h2>
+      <p class="sec-intro">Leave your email and we'll write when it's your turn — that's the only thing we'll ever use it for.</p>
+
+      <!-- ============================================================
+           TODO-FORM-ENDPOINT — the one thing to change before go-live.
+           Create a form at https://formspree.io (or any static-site form
+           service), then replace the action URL below with your real
+           endpoint, e.g. action="https://formspree.io/f/abcdwxyz".
+           Until then, submitting falls back to opening the visitor's
+           email app addressed to hello@termnest.app.
+           ============================================================ -->
+      <form id="waitlist-form" class="wl-form" action="https://formspree.io/f/TODO-FORM-ENDPOINT" method="POST">
+        <label for="wl-email" class="visually-hidden" style="position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%)">Your email address</label>
+        <input id="wl-email" type="email" name="email" required autocomplete="email" placeholder="you@example.com" inputmode="email">
+        <button class="btn primary" type="submit">Join the waitlist</button>
+      </form>
+      <p class="wl-ok" id="wl-ok" hidden>Opening your email app — send the message and you're on the list.</p>
+      <p class="wl-note">Prefer email? Write to <a href="mailto:hello@termnest.app">hello@termnest.app</a> and say "waitlist".</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap foot-row">
+    <a href="mailto:hello@termnest.app">hello@termnest.app</a>
+    <a href="privacy.html">Privacy</a>
+    <span class="made">Made in Dubai by a school parent</span>
+  </div>
+</footer>
+
+<script>
+  // Waitlist fallback: while the form action still carries the
+  // TODO-FORM-ENDPOINT placeholder, degrade gracefully to mailto.
+  (function () {
+    var form = document.getElementById('waitlist-form');
+    var ok = document.getElementById('wl-ok');
+    form.addEventListener('submit', function (e) {
+      if (form.action.indexOf('TODO-FORM-ENDPOINT') === -1) return; // real endpoint configured: submit normally
+      e.preventDefault();
+      var email = document.getElementById('wl-email').value;
+      window.location.href = 'mailto:hello@termnest.app'
+        + '?subject=' + encodeURIComponent('Termnest waitlist')
+        + '&body=' + encodeURIComponent('Please add me to the Termnest waitlist: ' + email);
+      ok.hidden = false;
+    });
+  })();
+</script>
+
+</body>
+</html>
