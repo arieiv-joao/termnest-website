@@ -80,12 +80,6 @@
 .foot-row a:hover{color:var(--t-ink)}
 .foot-row.made{margin-inline-start:auto}
   @media (max-width:640px){.foot-row.made{margin-inline-start:0} }
-  /* phones: the subprocessor/retention tables are wider than the screen — scroll them, don't crop the page */
-  @media (max-width:640px){
-    table{display:block; overflow-x:auto; max-width:100%; -webkit-overflow-scrolling:touch; font-size:13px}
-    table th, table td{white-space:nowrap}
-    table td:nth-child(3){white-space:normal; min-width:200px}
-  }
 </style>
 </head>
 <body>
