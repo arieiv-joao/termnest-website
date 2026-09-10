@@ -275,6 +275,10 @@
   .wl-inner h2.sec{margin-block-end:10px}
   .wl-inner .sec-intro{margin-block-end:28px}
   .wl-form{display:flex; gap:10px; flex-wrap:wrap; justify-content:center}
+  .wl-form select, .wl-form input[type=text]{
+    flex:1 1 200px; font-family:var(--body); font-size:15px; color:var(--t-ink);
+    background:var(--t-bg); border:1.5px solid var(--t-border-strong); border-radius:14px; padding:13px 16px;
+  }
   .wl-form input[type=email]{
     flex:1 1 260px; font-family:var(--body); font-size:16px; color:var(--t-ink);
     background:var(--t-bg); border:1.5px solid var(--t-border-strong); border-radius:14px;
@@ -538,20 +542,21 @@
       <h2 class="sec">Join the waitlist</h2>
       <p class="sec-intro">Leave your email and we'll write when it's your turn — that's the only thing we'll ever use it for.</p>
 
-      <!-- ============================================================
-           TODO-FORM-ENDPOINT — the one thing to change before go-live.
-           Create a form at https://formspree.io (or any static-site form
-           service), then replace the action URL below with your real
-           endpoint, e.g. action="https://formspree.io/f/abcdwxyz".
-           Until then, submitting falls back to opening the visitor's
-           email app addressed to hello@termnest.app.
-           ============================================================ -->
-      <form id="waitlist-form" class="wl-form" action="https://formspree.io/f/TODO-FORM-ENDPOINT" method="POST">
+      <!-- Waitlist: posts to the Google Apps Script web app — set WAITLIST_ENDPOINT
+           in the script at the bottom of this page (see waitlist/README.md). -->
+      <form id="waitlist-form" class="wl-form" method="POST" action="#" novalidate>
         <label for="wl-email" class="visually-hidden" style="position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%)">Your email address</label>
         <input id="wl-email" type="email" name="email" required autocomplete="email" placeholder="you@example.com" inputmode="email">
+        <select name="emirate" aria-label="Emirate (optional)">
+          <option value="">Emirate (optional)</option>
+          <option>Dubai</option><option>Abu Dhabi</option><option>Sharjah</option><option>Ajman</option><option>Ras Al Khaimah</option><option>Fujairah</option><option>Umm Al Quwain</option><option value="Outside UAE">Outside the UAE</option>
+        </select>
+        <input type="text" name="school" placeholder="Your child's school (optional)" autocomplete="organization" maxlength="120">
+        <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute; left:-9999px; width:1px; height:1px; opacity:0">
         <button class="btn primary" type="submit">Join the waitlist</button>
       </form>
-      <p class="wl-ok" id="wl-ok" hidden>Opening your email app — send the message and you're on the list.</p>
+      <p class="wl-ok" id="wl-ok" hidden>You're on the list — check your inbox for a confirmation.</p>
+      <p class="wl-ok" id="wl-err" hidden style="color:var(--t-danger)">That didn't go through. Try again, or email hello@termnest.app.</p>
       <p class="wl-note">Prefer email? Write to <a href="mailto:hello@termnest.app">hello@termnest.app</a> and say "waitlist".</p>
     </div>
   </section>
@@ -567,19 +572,28 @@
 </footer>
 
 <script>
-  // Waitlist fallback: while the form action still carries the
-  // TODO-FORM-ENDPOINT placeholder, degrade gracefully to mailto.
+  // Waitlist: posts to the Google Apps Script web app (see waitlist/README.md).
+  // Until WAITLIST_ENDPOINT is set, degrade gracefully to a mailto.
+  var WAITLIST_ENDPOINT = '';
   (function () {
     var form = document.getElementById('waitlist-form');
-    var ok = document.getElementById('wl-ok');
+    var ok = document.getElementById('wl-ok'), err = document.getElementById('wl-err');
+    var button = form.querySelector('button');
     form.addEventListener('submit', function (e) {
-      if (form.action.indexOf('TODO-FORM-ENDPOINT') === -1) return; // real endpoint configured: submit normally
       e.preventDefault();
-      var email = document.getElementById('wl-email').value;
-      window.location.href = 'mailto:hello@termnest.app'
-        + '?subject=' + encodeURIComponent('Termnest waitlist')
-        + '&body=' + encodeURIComponent('Please add me to the Termnest waitlist: ' + email);
-      ok.hidden = false;
+      var email = document.getElementById('wl-email').value.trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { document.getElementById('wl-email').focus(); return; }
+      if (!WAITLIST_ENDPOINT) {
+        window.location.href = 'mailto:hello@termnest.app?subject=' + encodeURIComponent('Termnest waitlist')
+          + '&body=' + encodeURIComponent('Please add me to the Termnest waitlist: ' + email);
+        ok.textContent = "Opening your email app — send the message and you're on the list."; ok.hidden = false; return;
+      }
+      ok.hidden = true; err.hidden = true; button.disabled = true; button.textContent = 'Joining…';
+      // no-cors: Apps Script answers without CORS headers; an opaque 2xx means it landed.
+      fetch(WAITLIST_ENDPOINT, { method: 'POST', mode: 'no-cors', body: new FormData(form) })
+        .then(function () { ok.hidden = false; form.reset(); })
+        .catch(function () { err.hidden = false; })
+        .then(function () { button.disabled = false; button.textContent = 'Join the waitlist'; });
     });
   })();
 </script>

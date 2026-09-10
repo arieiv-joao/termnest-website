@@ -10,7 +10,7 @@ Fully static: two HTML pages, no build step, no dependencies. Edit, commit, push
 
 ## Before go-live (founder checklist)
 
-1. **Waitlist form endpoint** — create a free form at [formspree.io](https://formspree.io) (or any static-form service) and replace the one `TODO-FORM-ENDPOINT` placeholder in `index.html` (search for it; it's flagged with a big comment). Until then, submissions gracefully fall back to opening the visitor's email app addressed to hello@termnest.app.
+1. **Waitlist form endpoint** — a Google Sheet + Apps Script, no third-party form service: follow `waitlist/README.md`, then set `WAITLIST_ENDPOINT` in `index.html` to the web-app URL. Until then, submissions fall back to opening the visitor's email app addressed to hello@termnest.app.
 2. **Email addresses** — set up mail routing for `hello@termnest.app` (used in the footer, waitlist fallback) and later `privacy@` / `security@` (referenced in the privacy page). GoDaddy sells mailboxes, or use free email forwarding (GoDaddy's own, or Cloudflare Email Routing if you move DNS there).
 3. **Privacy review** — the 17 counsel/Dev items in `../marketing/privacy-review-flags.md` need sign-off before the Google Cloud console points at this URL (they were removed from the public page on 2026-09-10).
 
