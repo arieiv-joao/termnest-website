@@ -5,14 +5,14 @@ Fully static: two HTML pages, no build step, no dependencies. Edit, commit, push
 | File | What it is |
 |---|---|
 | `index.html` | Landing page (hero, how-it-works, trust section, waitlist) |
-| `privacy.html` | Privacy page — **DRAFT**: counsel-review flags are visible on purpose; resolve them before Google verification |
+| `privacy.html` | Privacy page — public copy. The counsel/Dev review checklist lives OUTSIDE this repo (`../marketing/privacy-review-flags.md`, not published); resolve it before Google verification |
 | `CNAME` | Custom-domain marker for GitHub Pages (contains `termnest.app`) |
 
 ## Before go-live (founder checklist)
 
 1. **Waitlist form endpoint** — create a free form at [formspree.io](https://formspree.io) (or any static-form service) and replace the one `TODO-FORM-ENDPOINT` placeholder in `index.html` (search for it; it's flagged with a big comment). Until then, submissions gracefully fall back to opening the visitor's email app addressed to hello@termnest.app.
 2. **Email addresses** — set up mail routing for `hello@termnest.app` (used in the footer, waitlist fallback) and later `privacy@` / `security@` (referenced in the privacy page). GoDaddy sells mailboxes, or use free email forwarding (GoDaddy's own, or Cloudflare Email Routing if you move DNS there).
-3. **Privacy page flags** — every coral ⚑ flag on `privacy.html` needs counsel/Dev sign-off before the Google Cloud console points at this URL.
+3. **Privacy review** — the 17 counsel/Dev items in `../marketing/privacy-review-flags.md` need sign-off before the Google Cloud console points at this URL (they were removed from the public page on 2026-09-10).
 
 ## Deploy: GitHub Pages (recommended)
 

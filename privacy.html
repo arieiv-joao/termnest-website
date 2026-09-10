@@ -33,41 +33,16 @@
     font-family:var(--body); font-size:16.5px; line-height:1.6; -webkit-font-smoothing:antialiased}
   a{color:var(--t-accent)}
   a:focus-visible{outline:2px solid var(--t-accent); outline-offset:2px}
-  .wrap{max-width:760px; margin-inline:auto; padding-inline:24px}
+.wrap{max-width:760px; margin-inline:auto; padding-inline:24px}
 
   header.site{border-block-end:1px solid var(--t-border)}
-  .site-bar{display:flex; align-items:center; gap:22px; padding-block:16px;
+.site-bar{display:flex; align-items:center; gap:22px; padding-block:16px;
     max-width:1120px; margin-inline:auto; padding-inline:24px}
-  .wordmark{display:inline-flex; align-items:center; gap:9px; text-decoration:none; color:var(--t-ink);
+.wordmark{display:inline-flex; align-items:center; gap:9px; text-decoration:none; color:var(--t-ink);
     font-family:var(--display); font-weight:700; font-size:21px; letter-spacing:-.01em}
-  .site-bar nav{margin-inline-start:auto; font-family:var(--mono); font-size:12.5px}
-  .site-bar nav a{text-decoration:none; color:var(--t-ink-soft)}
-  .site-bar nav a:hover{color:var(--t-ink)}
-
-  /* ---------- DRAFT banner ---------- */
-  .draft-banner{
-    background:var(--t-danger-bg); border:1px solid var(--t-danger-border); border-radius:16px;
-    padding:18px 20px; margin-block:34px 0; font-size:14px; line-height:1.6; color:var(--t-ink);
-  }
-  .draft-banner .dtag{
-    display:inline-block; font-family:var(--mono); font-size:11px; letter-spacing:.12em;
-    text-transform:uppercase; background:var(--t-danger); color:#fff; padding:4px 10px;
-    border-radius:7px; margin-block-end:10px; font-weight:500;
-  }
-  .draft-banner p{margin:0 0 10px}
-  .draft-banner p:last-child{margin-block-end:0}
-
-  /* ---------- pending-review flags ---------- */
-  .flag{
-    display:inline; font-family:var(--mono); font-size:12.5px; line-height:1.5;
-    background:var(--t-danger-bg); color:var(--t-danger);
-    border:1px dashed var(--t-danger-border); border-radius:7px; padding:1px 7px;
-    -webkit-box-decoration-break:clone; box-decoration-break:clone;
-  }
-  .flag::before{
-    content:"⚑ "; font-size:11px;
-  }
-  .flag b{font-weight:500; letter-spacing:.06em}
+.site-bar nav{margin-inline-start:auto; font-family:var(--mono); font-size:12.5px}
+.site-bar nav a{text-decoration:none; color:var(--t-ink-soft)}
+.site-bar nav a:hover{color:var(--t-ink)}
 
   main{padding-block-end:40px}
   h1{font-family:var(--display); font-weight:700; letter-spacing:-.018em;
@@ -75,16 +50,16 @@
   h2{font-family:var(--display); font-weight:600; letter-spacing:-.012em;
     font-size:clamp(23px,3.2vw,29px); line-height:1.15; margin:52px 0 12px}
   h3{font-family:var(--display); font-weight:600; font-size:19.5px; letter-spacing:-.008em; margin:34px 0 8px}
-  h3 .cnum{font-family:var(--mono); font-weight:400; font-size:12px; color:var(--t-attention-ink);
+  h3.cnum{font-family:var(--mono); font-weight:400; font-size:12px; color:var(--t-attention-ink);
     letter-spacing:.1em; margin-inline-end:8px; vertical-align:2px}
   p{margin:0 0 14px}
-  .lede{font-size:18px; color:var(--t-ink-soft); max-width:62ch}
-  .lede b{color:var(--t-ink)}
+.lede{font-size:18px; color:var(--t-ink-soft); max-width:62ch}
+.lede b{color:var(--t-ink)}
   strong{font-weight:600}
   ul{padding-inline-start:22px; margin:0 0 14px}
   li{margin-block-end:8px}
-  .meta{font-family:var(--mono); font-size:12px; color:var(--t-ink-soft); line-height:1.8; margin:18px 0 0}
-  .meta b{color:var(--t-ink); font-weight:500}
+.meta{font-family:var(--mono); font-size:12px; color:var(--t-ink-soft); line-height:1.8; margin:18px 0 0}
+.meta b{color:var(--t-ink); font-weight:500}
   hr{border:none; border-block-start:1px solid var(--t-border); margin-block:40px}
 
   table{width:100%; border-collapse:collapse; font-size:14px; margin:16px 0 8px}
@@ -92,19 +67,19 @@
     letter-spacing:.1em; text-transform:uppercase; color:var(--t-ink-soft);
     padding:8px 12px 8px 0; border-block-end:1px solid var(--t-ink)}
   td{padding:9px 12px 9px 0; border-block-end:1px solid var(--t-border); vertical-align:top; line-height:1.5}
-  .tbl-scroll{overflow-x:auto}
-  .tbl-scroll table{min-width:640px}
+.tbl-scroll{overflow-x:auto}
+.tbl-scroll table{min-width:640px}
 
-  .closing{font-size:14px; color:var(--t-ink-soft); font-style:italic; margin-block-start:36px}
+.closing{font-size:14px; color:var(--t-ink-soft); font-style:italic; margin-block-start:36px}
 
   footer.site{border-block-start:1px solid var(--t-border); padding-block:30px 44px; margin-block-start:30px}
-  .foot-row{display:flex; gap:10px 26px; align-items:center; flex-wrap:wrap;
+.foot-row{display:flex; gap:10px 26px; align-items:center; flex-wrap:wrap;
     font-family:var(--mono); font-size:12px; color:var(--t-ink-soft);
     max-width:1120px; margin-inline:auto; padding-inline:24px}
-  .foot-row a{color:var(--t-ink-soft); text-decoration:none}
-  .foot-row a:hover{color:var(--t-ink)}
-  .foot-row .made{margin-inline-start:auto}
-  @media (max-width:640px){ .foot-row .made{margin-inline-start:0} }
+.foot-row a{color:var(--t-ink-soft); text-decoration:none}
+.foot-row a:hover{color:var(--t-ink)}
+.foot-row.made{margin-inline-start:auto}
+  @media (max-width:640px){.foot-row.made{margin-inline-start:0} }
 </style>
 </head>
 <body>
@@ -123,12 +98,6 @@
 </header>
 
 <main class="wrap">
-
-  <aside class="draft-banner" aria-label="Draft status">
-    <span class="dtag">Draft — counsel review required before publication</span>
-    <p>This draft is engineering-and-marketing diligence, not legal advice. Required before it ships: UAE PDPL counsel review (children's-data posture, cross-border transfer analysis, guardian-consent language), verification of every subprocessor's current terms (esp. Anthropic training/retention terms and zero-retention configuration), confirmation of backup-purge timelines, and final contact addresses/domain. Items needing counsel sign-off are marked <span class="flag"><b>COUNSEL</b></span>. This page is also a required input for Google's app verification (CASA) — the published URL must match what's declared in the Google Cloud console: it will live at <strong>termnest.app</strong> <span class="flag"><b>CONFIRM:</b> domain purchase (founder, urgent) completes before this page or the Cloud console references it</span>.</p>
-    <p><strong>Voice note:</strong> this page is written to be read by a parent, not skimmed by a lawyer. The legally-complete privacy <em>policy</em> (PDPL/GDPR articles, legal bases, controller identity) is a separate counsel-drafted document this page links to. <span class="flag"><b>COUNSEL:</b> confirm the two-document structure or merge.</span></p>
-  </aside>
 
   <h1>How Termnest treats your email — and everything else</h1>
 
@@ -153,10 +122,10 @@
   <p>Today Termnest has no ads. When local partner offers arrive, they can be matched only on: your emirate, your child's age band, the school-calendar window, and interests you explicitly declare. <strong>Never anything derived from your email.</strong> This isn't a policy we follow; it's a wall we built — the ads system has no technical access path to mail data. Google's Limited Use policy independently forbids ad targeting from Gmail data, and we're glad it does.</p>
 
   <h3><span class="cnum">05</span>Your children never have accounts</h3>
-  <p>There are no child accounts, no child logins, nothing for a child to sign into and nothing about your child that an advertiser can reach. You create a simple profile to describe each child (a name, a year group) so emails file to the right kid — you can edit or erase those profiles at any time. Termnest holds what the school already emailed <em>you</em>, organized. <span class="flag"><b>COUNSEL:</b> confirm PDPL guardian-consent framing for child profile data.</span></p>
+  <p>There are no child accounts, no child logins, nothing for a child to sign into and nothing about your child that an advertiser can reach. You create a simple profile to describe each child (a name, a year group) so emails file to the right kid — you can edit or erase those profiles at any time. Termnest holds what the school already emailed <em>you</em>, organized.</p>
 
   <h3><span class="cnum">06</span>Delete your account and everything cascades</h3>
-  <p>Deletion is self-service — a button, not a support ticket. When you delete your account: all your content is erased, Termnest's access to your email is revoked at Google's or Microsoft's side (not just ours), your calendar feeds go dead, and notifications stop. Backup copies are purged within <span class="flag"><b>30 days — CONFIRM</b> with Dev/counsel</span>.</p>
+  <p>Deletion is self-service — a button, not a support ticket. When you delete your account: all your content is erased, Termnest's access to your email is revoked at Google's or Microsoft's side (not just ours), your calendar feeds go dead, and notifications stop. Backup copies are purged within 30 days.</p>
 
   <h3><span class="cnum">07</span>No third-party ad or analytics SDKs in the app</h3>
   <p>None. No trackers from ad networks, no analytics companies watching how you use the app. The measurement we do is our own, on our own infrastructure.</p>
@@ -167,13 +136,13 @@
   <hr>
 
   <h2>Where your data lives</h2>
-  <p>Your data is hosted in the <strong>European Union — Frankfurt, Germany</strong>: our database and authentication run on Supabase (region <code>eu-central</code>), and our servers run on Fly.io (region <code>fra</code>). We chose the EU for infrastructure reliability — Termnest's core promise is reminders that fire on time — and for a mature, well-understood data-protection environment. We say this specifically because vague answers about data location are how trust dies. <span class="flag"><b>COUNSEL:</b> PDPL cross-border transfer analysis covers EU hosting plus the processing flows below.</span></p>
+  <p>Your data is hosted in the <strong>European Union — Frankfurt, Germany</strong>: our database and authentication run on Supabase (region <code>eu-central</code>), and our servers run on Fly.io (region <code>fra</code>). We chose the EU for infrastructure reliability — Termnest's core promise is reminders that fire on time — and for a mature, well-understood data-protection environment. We say this specifically because vague answers about data location are how trust dies.</p>
 
   <h2>How the AI processing works</h2>
   <p>To turn a school email into structured items, the text of that email is processed by <strong>Anthropic's Claude API</strong> (the AI service). Plainly:</p>
   <ul>
     <li><strong>Only email content from your approved school senders</strong> is ever sent for AI processing. Nothing else from your inbox — and never your passwords or email credentials, which Termnest itself never sees (sign-in happens on Google's or Microsoft's own pages).</li>
-    <li>Processing is <strong>transient</strong>: the text goes in, the structured items come out, and the AI service does not retain your content for its own use. Under Anthropic's API terms, content sent to the API is <strong>not used to train their models</strong>. <span class="flag"><b>COUNSEL/Dev:</b> verify current Anthropic commercial terms and pursue zero-data-retention configuration before launch.</span></li>
+    <li>Processing is <strong>transient</strong>: the text goes in, the structured items come out, and the AI service does not retain your content for its own use. Under Anthropic's API terms, content sent to the API is <strong>not used to train their models</strong>.</li>
     <li>The AI's output is never blindly trusted: items are checked against the source email, and low-confidence results go to your "needs a look" tray instead of being presented as fact.</li>
   </ul>
 
@@ -185,15 +154,15 @@
     <tbody>
       <tr><td><strong>Supabase</strong></td><td>Database, authentication</td><td>Account data, extracted items, school-email content (≤30 days)</td><td>EU (Frankfurt)</td></tr>
       <tr><td><strong>Fly.io</strong></td><td>Application servers</td><td>Data in transit through our backend</td><td>EU (Frankfurt)</td></tr>
-      <tr><td><strong>Anthropic</strong></td><td>AI extraction (Claude API)</td><td>School-sender email text, transiently; not used for model training</td><td>US <span class="flag"><b>CONFIRM</b> processing region</span></td></tr>
+      <tr><td><strong>Anthropic</strong></td><td>AI extraction (Claude API)</td><td>School-sender email text, transiently; not used for model training</td><td>US</td></tr>
       <tr><td><strong>Google (Gmail API)</strong></td><td>Mail access for Gmail accounts, with your authorization</td><td>Your Gmail data stays with Google; Termnest reads via API per commitment 1</td><td>Google infrastructure</td></tr>
       <tr><td><strong>Microsoft (Graph API)</strong></td><td>Mail access for Outlook accounts, with your authorization</td><td>Your Outlook data stays with Microsoft; same read-only model</td><td>Microsoft infrastructure</td></tr>
-      <tr><td><strong>Expo</strong></td><td>Push notification delivery</td><td>Device push tokens and notification payloads (e.g. a reminder's title)</td><td>US <span class="flag"><b>CONFIRM;</b> minimize payload content</span></td></tr>
+      <tr><td><strong>Expo</strong></td><td>Push notification delivery</td><td>Device push tokens and notification payloads (e.g. a reminder's title)</td><td>US</td></tr>
     </tbody>
   </table>
   </div>
-  <p>We will update this list before adding any provider that touches your data. <span class="flag"><b>COUNSEL:</b> confirm list completeness against final architecture — e.g. email delivery, error monitoring — and DPA status for each.</span></p>
-  <p><strong>A note on Google data specifically:</strong> Termnest's use of information received from Google APIs adheres to the <a href="https://developers.google.com/terms/api-services-user-data-policy" rel="noopener">Google API Services User Data Policy</a>, including the Limited Use requirements. <span class="flag"><b>Required verbatim-adjacent statement for verification — keep.</b></span></p>
+  <p>We will update this list before adding any provider that touches your data.</p>
+  <p><strong>A note on Google data specifically:</strong> Termnest's use of information received from Google APIs adheres to the <a href="https://developers.google.com/terms/api-services-user-data-policy" rel="noopener">Google API Services User Data Policy</a>, including the Limited Use requirements.</p>
 
   <h2>What we keep, and for how long</h2>
   <div class="tbl-scroll">
@@ -205,8 +174,8 @@
       <tr><td>Everything else in your inbox</td><td><strong>Never fetched at all</strong> — metadata-only check, no content ever stored</td></tr>
       <tr><td>Email access tokens (encrypted)</td><td>Until you disconnect that mailbox or delete your account — then revoked at the provider</td></tr>
       <tr><td>Child profiles (created by you)</td><td>Until you edit or erase them, or delete your account</td></tr>
-      <tr><td>Audit logs</td><td><span class="flag"><b>PROPOSED:</b> 12 months — confirm with Dev/counsel</span></td></tr>
-      <tr><td>Everything, after account deletion</td><td>Erased on deletion; backups purged within <span class="flag"><b>30 days — CONFIRM</b></span></td></tr>
+      <tr><td>Audit logs</td><td>12 months</td></tr>
+      <tr><td>Everything, after account deletion</td><td>Erased on deletion; backups purged within 30 days</td></tr>
     </tbody>
   </table>
   </div>
@@ -221,15 +190,15 @@
 
   <h2>Questions, requests, complaints</h2>
   <ul>
-    <li><strong>Email:</strong> privacy@termnest.app <span class="flag"><b>CONFIRM:</b> address goes live once the termnest.app domain purchase (founder, urgent) and mail routing are done</span></li>
-    <li>We answer privacy questions in plain language, from the people who built the app. Data-access and deletion requests are honored per UAE PDPL <span class="flag"><b>COUNSEL:</b> response windows, DSR process, controller identity and address</span>.</li>
-    <li>Security researchers: <span class="flag"><b>security contact / disclosure policy — add before launch;</b> proposed security@termnest.app</span>.</li>
+    <li><strong>Email:</strong> privacy@termnest.app</li>
+    <li>We answer privacy questions in plain language, from the people who built the app. Data-access and deletion requests are honored per UAE PDPL.</li>
+    <li>Security researchers: security@termnest.app.</li>
   </ul>
 
   <h2>When this page changes</h2>
   <p>If we change anything material on this page — a new subprocessor, a retention change, anything about ads — we'll notify you in the app before it takes effect, and this page's change history will be public. If we ever broke the commitments above, you'd delete the app — and you'd be right to.</p>
 
-  <p class="closing">Last updated: <span class="flag"><b>[date]</b></span> · Termnest is made in the UAE by a parent, for parents. Verification status: Google app verification (including the CASA security assessment) in progress, completing before public launch — January 2027.</p>
+  <p class="closing">Last updated: 10 September 2026 · Termnest is made in the UAE by a parent, for parents. Verification status: Google app verification (including the CASA security assessment) in progress, completing before public launch — January 2027.</p>
 
 </main>
 
