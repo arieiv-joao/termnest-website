@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Join your family on Termnest</title>
+<meta name="robots" content="noindex">
+<style>
+  :root{--bg:#F4F6F2;--surface:#fff;--ink:#143D38;--ink-soft:#5B6E6B;--accent:#1F7A6F;--border:#DCE3E0}
+  *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif}
+  main{max-width:520px;margin:0 auto;padding:40px 24px 60px}
+  .wordmark{display:flex;align-items:center;gap:9px;font-weight:700;font-size:21px;text-decoration:none;color:var(--ink)}
+  h1{font-size:clamp(28px,7vw,36px);line-height:1.1;margin:36px 0 12px;letter-spacing:-.02em}
+  p{color:var(--ink-soft);margin:0 0 16px}
+  .code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:34px;letter-spacing:.18em;background:var(--surface);border:1.5px solid var(--border);border-radius:16px;padding:18px;text-align:center;margin:20px 0 8px;user-select:all}
+  .btn{display:block;text-align:center;font-weight:600;text-decoration:none;padding:14px 22px;border-radius:14px;margin-top:12px}
+  .primary{background:var(--accent);color:#fff} .ghost{background:var(--surface);color:var(--ink);border:1.5px solid var(--border)}
+  ol{padding-left:20px;color:var(--ink-soft)} li{margin-bottom:8px}
+  .hint{font-size:13.5px} .hidden{display:none}
+</style>
+</head>
+<body>
+<main>
+  <a class="wordmark" href="/"><svg width="26" height="18" viewBox="0 0 22 16" fill="none" aria-hidden="true"><path d="M4 15 C4 6, 8 2, 8 2" stroke="#1F7A6F" stroke-width="3" stroke-linecap="round"/><path d="M18 15 C18 6, 14 2, 14 2" stroke="#E0A94E" stroke-width="3" stroke-linecap="round"/></svg>Termnest</a>
+  <h1>You've been invited to join your family on Termnest</h1>
+  <p>Your co-parent set up the school feed. Join with this code and you'll see the same events, tasks and reminders — nothing to set up.</p>
+  <div class="code" id="code">— — — —</div>
+  <p class="hint" id="nocode">This link has no code in it. Ask your co-parent to share the invite again.</p>
+  <a class="btn primary" id="open" href="#">Open in Termnest</a>
+  <p class="hint">Don't have the app yet?</p>
+  <ol>
+    <li>Install Termnest — during the beta your co-parent will send you the install link (Android APK, or a TestFlight invite on iPhone).</li>
+    <li>Open it and sign in with <b>your own</b> email address.</li>
+    <li>Tap <b>“Got an invite from your co-parent?”</b> and enter the code above.</li>
+  </ol>
+  <a class="btn ghost" id="copy" href="#">Copy the code</a>
+</main>
+<script>
+  var code = (new URLSearchParams(location.search).get('code') || '').toUpperCase().replace(/[^A-Z0-9]/g,'');
+  if (code.length === 8) code = code.slice(0,4) + '-' + code.slice(4); else code = '';
+  var el = document.getElementById('code'), open = document.getElementById('open'), copy = document.getElementById('copy');
+  if (code) { el.textContent = code; document.getElementById('nocode').classList.add('hidden'); open.href = 'termnest://onboarding/join?code=' + code; }
+  else { open.classList.add('hidden'); copy.classList.add('hidden'); }
+  copy.addEventListener('click', function (e) { e.preventDefault(); navigator.clipboard && navigator.clipboard.writeText(code).then(function(){ copy.textContent = 'Copied'; }); });
+</script>
+</body>
+</html>
