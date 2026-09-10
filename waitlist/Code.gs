@@ -55,9 +55,11 @@ function doPost(e) {
   } finally { lock.releaseLock(); }
 
   try {
-    GmailApp.sendEmail(email, "You're on the Termnest waitlist",
-      "Thanks — you're on the list.\n\nTermnest turns your school's emails into one organised, per-child feed of events, tasks and fee reminders. We're letting families in a few at a time during the beta; you'll hear from us at this address when it's your turn.\n\nReply to this email if you have a question.\n\n— Joao, Termnest\nhttps://termnest.app",
-      { name: FROM_NAME, replyTo: REPLY_TO });
+    send_(email, "You're on the Termnest waitlist", [
+      "Thanks — you're on the list.",
+      "Termnest turns your school's emails into one organised, per-child feed of events, tasks and fee reminders. We're letting families in a few at a time during the beta; you'll hear from us at this address when it's your turn.",
+      "Reply to this email if you have a question.",
+    ]);
   } catch (err) { /* the row is what matters; a failed confirmation is visible in the digest */ }
   return json_({ ok: true });
 }
@@ -70,11 +72,13 @@ function onStatusEdit(e) {
   var row = r.getRow();
   var email = String(sh.getRange(row, 2).getValue());
   if (sh.getRange(row, 7).getValue()) return;                           // already invited once
-  var steps = "1. Install Termnest: " + ANDROID_INSTALL_URL + (TESTFLIGHT_URL ? "\n   iPhone: " + TESTFLIGHT_URL : "") +
-    "\n2. Sign in with this email address.\n3. Add your children, connect your school Gmail, approve the school senders — about three minutes.";
-  GmailApp.sendEmail(email, "Your Termnest invite",
-    "It's your turn.\n\n" + steps + "\n\nTermnest only reads mail from the school senders you approve, and every item shows the email it came from. If anything looks wrong, reply here — during the beta you're talking to the person who built it.\n\n— Joao, Termnest",
-    { name: FROM_NAME, replyTo: REPLY_TO });
+  send_(email, "Your Termnest invite", [
+    "It's your turn.",
+    "<ol style=\"margin:0;padding-left:20px\"><li>Install Termnest: <a href=\"" + ANDROID_INSTALL_URL + "\">" + ANDROID_INSTALL_URL + "</a>" +
+      (TESTFLIGHT_URL ? "<br>iPhone: <a href=\"" + TESTFLIGHT_URL + "\">" + TESTFLIGHT_URL + "</a>" : "") +
+      "</li><li>Sign in with this email address.</li><li>Add your children, connect your school Gmail, approve the school senders — about three minutes.</li></ol>",
+    "Termnest only reads mail from the school senders you approve, and every item shows the email it came from. If anything looks wrong, reply here — during the beta you're talking to the person who built it.",
+  ]);
   sh.getRange(row, 7).setValue(new Date());
 }
 
@@ -90,6 +94,19 @@ function weeklyDigest() {
     'Total: ' + rows.length + '\nBy status:\n' + count(rows, 5) + '\n\nSchools mentioned this week:\n' + count(recent.filter(function (r) { return r[3]; }), 3) +
     '\n\nSheet: ' + SpreadsheetApp.getActive().getUrl();
   GmailApp.sendEmail(REPLY_TO, 'Termnest waitlist — weekly digest', body, { name: FROM_NAME });
+}
+
+/**
+ * One paragraph per array entry, in a plain readable layout; Gmail reflows
+ * hard-wrapped plain text unevenly, HTML paragraphs don't. Entries may hold
+ * inline HTML. A plain-text alternative is generated for clients that need it.
+ */
+function send_(to, subject, paragraphs) {
+  var html = '<div style="font:16px/1.55 -apple-system,BlinkMacSystemFont,Segoe UI,Inter,sans-serif;color:#143D38;max-width:560px">' +
+    paragraphs.map(function (p) { return '<p style="margin:0 0 16px">' + p + '</p>'; }).join('') +
+    '<p style="margin:24px 0 0;color:#5B6E6B">— Joao, Termnest<br><a href="https://termnest.app" style="color:#1F7A6F">termnest.app</a></p></div>';
+  var text = paragraphs.map(function (p) { return p.replace(/<li>/g, '\n- ').replace(/<[^>]+>/g, ''); }).join('\n\n') + '\n\n— Joao, Termnest\nhttps://termnest.app';
+  GmailApp.sendEmail(to, subject, text, { name: FROM_NAME, replyTo: REPLY_TO, htmlBody: html });
 }
 
 function json_(obj) {
