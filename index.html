@@ -144,7 +144,8 @@
   .stage{position:relative; justify-self:center; padding-block-start:26px; max-width:100%; min-width:0}
   @media (max-width:640px){
     .stage{padding-block-start:0; width:100%}
-    .notif{position:static; width:auto; max-width:none; margin:0 0 -18px; z-index:2}
+    /* .stage .notif: outranks the base .notif rule declared later in the sheet */
+    .stage .notif{position:static; width:auto; max-width:none; margin:0 0 -18px; z-index:2}
   }
   .phone{
     width:min(390px,100%); background:#143D38; border-radius:44px; padding:10px;
